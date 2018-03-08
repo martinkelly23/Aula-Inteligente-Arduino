@@ -119,7 +119,7 @@ float corriente;
 int nMuestras = 200;
 int muestras = 0;
 int tension = 220;
-float potencia;
+double potencia = 0;
 int consumoParcial = 0;
 
 void setup() {
@@ -181,20 +181,6 @@ void setup() {
 
   // Inicializo el medidor de energia
   InitEnergyIC();
-     double potencia = GetLineVoltage();
-    Serial.println(potencia);
-     potencia = GetLineVoltage();
-    Serial.println(potencia);
-    delay(1000);
-    potencia = GetLineVoltage();
-    Serial.println(potencia);
-    delay(1000);
-    potencia = GetLineVoltage();
-    Serial.println(potencia);
-    delay(1000);
-    potencia = GetLineVoltage();
-    Serial.println(potencia);
-
 }
 
 void loop() {
@@ -934,24 +920,9 @@ void medicionTemperatura(){
 
 //Funcion para la medicion de la corriente electrica
 void medicionElectrica(){
-  if(muestras !=  nMuestras)
-  {
-    lecturaCorriente = analogRead(voutCorriente)*(5.0 / 1023.0); //lectura del sensor
-    Serial.println(lecturaCorriente);
-    corriente = (lecturaCorriente - 2.5) / sensibilidad; //Ecuación  para obtener la corriente
-    Serial.println(corriente);
-    muestras++;
-  }
-  else
-  {
-    muestras = 0;
-    corriente = corriente/nMuestras;
-    potencia = tension * corriente;
+    potencia = GetLineVoltage();
     consumoParcial += potencia; 
-    Serial.print("Corriente: ");
-    Serial.println(corriente);
     Serial.print("Potencia: ");
     Serial.println(potencia); 
-  }
 }
   
